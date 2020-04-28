@@ -1,0 +1,20 @@
+<resources>
+
+    <dimen name="margin_large">48dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_very_small">4dp</dimen>
+
+    <dimen name="padding_large_">48dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+
+
+    <dimen name="size_large">24sp</dimen>
+    <dimen name="size_medium">20sp</dimen>
+    <dimen name="size_small">16sp</dimen>
+
+    <dimen name="width_image">150dp</dimen>
+    <dimen name="height_image">150dp</dimen>
+
+</resources>

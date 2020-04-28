@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
+        <!--SearchView query text color-->
+        <item name="android:textColorPrimary">@color/colorBlack</item>
+        <!--SearchView query hint text color-->
+        <item name="android:textColorHint">@color/colorHint</item>
+    </style>
+
+
+    <!--SearchViewStyle -->
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="voiceIcon">@drawable/ic_search_voice</item>
+        <item name="closeIcon">@drawable/ic_search_close</item>
+        <item name="searchHintIcon">@drawable/ic_search_hint</item>
+    </style>
+
+</resources>

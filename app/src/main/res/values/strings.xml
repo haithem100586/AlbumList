@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AlbumList</string>
+    <string name="hint_search">Search</string>
+
+    <string name="msg_no_internet">You are not connected to Internet!!</string>
+    <string name="msg_cannot_delete">Cannot delete without Internet!!</string>
+    <string name="msg_problem_server">Cannot connect to server!!</string>
+    <string name="msg_retry">RETRY</string>
+
+</resources>
