@@ -12,6 +12,7 @@ import com.android.albumlist.R
 import com.android.albumlist.domain.Photo
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.innerlayout.view.*
+import java.util.*
 
 
 /* Adapter class of photo*/
@@ -70,7 +71,12 @@ class PhotoAdapter(
                 } else {
                     val filteredList: MutableList<Photo> = mutableListOf()
                     for (row in photosMutableList) {
-                        if (row.title.toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.title.toLowerCase(Locale.ROOT).contains(
+                                charString.toLowerCase(
+                                    Locale.ROOT
+                                )
+                            )
+                        ) {
                             filteredList.add(row)
                         }
                     }
@@ -84,7 +90,6 @@ class PhotoAdapter(
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
                 searchPhotosMutableList = filterResults.values as MutableList<Photo>
-                println("xxxxxxxxxxxxxxxxxxxxxxxxzzzzzzzzzzzz:" + searchPhotosMutableList.size)
                 notifyDataSetChanged()
             }
         }

@@ -10,8 +10,6 @@ import com.android.albumlist.util.ConnectivityHelper
 open class AlbumListViewModel(application: Application, protected val interactors: Interactors) :
     AndroidViewModel(application) {
 
-    //protected val application: AlbumListApplication = getApplication()
-
     open fun isNetworkAvailable(context: Context): Boolean {
         val connectivityHelper = ConnectivityHelper()
         if (connectivityHelper.isConnectedToNetwork(context)) run {

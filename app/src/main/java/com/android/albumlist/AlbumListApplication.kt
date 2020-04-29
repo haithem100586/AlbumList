@@ -1,9 +1,11 @@
 package com.android.albumlist
 
 import android.app.Application
-import com.android.albumlist.data.PhotoRepository
+import com.android.albumlist.data.photo.local.LocalPhotoRepository
+import com.android.albumlist.data.photo.remote.RemotePhotoRepository
 import com.android.albumlist.framework.Interactors
-import com.android.albumlist.framework.db.ServicesPhotoDataSource
+import com.android.albumlist.framework.db.RoomPhotoDataSource
+import com.android.albumlist.framework.remote.RetrofitPhotoDataSource
 import com.android.albumlist.interactors.GetAllPhotosFromDB
 import com.android.albumlist.interactors.GetAllPhotosFromWS
 import com.android.albumlist.interactors.InsertAllPhotos
@@ -15,9 +17,8 @@ class AlbumListApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val photoRepository = PhotoRepository(
-            ServicesPhotoDataSource(this)
-        )
+        val localPhotoRepository = LocalPhotoRepository(RoomPhotoDataSource(this))
+        val remotePhotoRepository = RemotePhotoRepository(RetrofitPhotoDataSource())
 
         /*
         This injects all the dependencies into AlbumListViewModelFactory.
@@ -26,9 +27,9 @@ class AlbumListApplication : Application() {
         AlbumListViewModelFactory.inject(
             this,
             Interactors(
-                InsertAllPhotos(photoRepository),
-                GetAllPhotosFromWS(photoRepository),
-                GetAllPhotosFromDB(photoRepository)
+                InsertAllPhotos(localPhotoRepository),
+                GetAllPhotosFromWS(remotePhotoRepository),
+                GetAllPhotosFromDB(localPhotoRepository)
             )
         )
     }

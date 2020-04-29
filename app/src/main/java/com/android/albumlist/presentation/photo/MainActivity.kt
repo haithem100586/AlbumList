@@ -37,15 +37,11 @@ class MainActivity : BaseActivity() {
         getAllPhotos()
         callSearch()
         callPullToRefresh()
-
-        ///verify warnings, integrate log
-        //UT
     }
 
 
     fun initView() {
-        photoAdapter = PhotoAdapter() {
-        }
+        photoAdapter = PhotoAdapter() {}
         rv_photos.layoutManager = LinearLayoutManager(this@MainActivity)
         rv_photos.adapter = photoAdapter
     }
@@ -73,7 +69,10 @@ class MainActivity : BaseActivity() {
         if (photoViewModel.isNetworkAvailable(this)) {
             photoViewModel.getPhotosFromWS()
             photoViewModel.listResourcePhotosMutableLiveData.observe(this, Observer {
-                Timber.d("@@@ getPhotosFromWS : listResourcePhotosMutableLiveData size is %d", it.data?.size)
+                Timber.d(
+                    "@@@ getPhotosFromWS : listResourcePhotosMutableLiveData size is %d",
+                    it.data?.size
+                )
                 if (it.errorCode != null) {
                     displayToast(it.errorCode!!)
                     pb_home.visibility = View.GONE
@@ -98,6 +97,7 @@ class MainActivity : BaseActivity() {
         sv_input.maxWidth = Integer.MAX_VALUE
         // listening to search query text change
         sv_input.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(query: String): Boolean {
                 // filter recycler view when query submitted
                 photoAdapter.filter.filter(query)
