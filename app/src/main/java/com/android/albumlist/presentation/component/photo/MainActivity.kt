@@ -1,4 +1,4 @@
-package com.android.albumlist.presentation.photo
+package com.android.albumlist.presentation.component.photo
 
 import android.app.SearchManager
 import android.content.Context
@@ -16,6 +16,7 @@ import com.task.data.error.Error.Companion.NETWORK_ERROR
 import com.task.data.error.Error.Companion.NO_INTERNET_CONNECTION
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 

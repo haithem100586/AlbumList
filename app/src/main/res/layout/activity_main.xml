@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_small"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".presentation.photo.MainActivity">
+    tools:context=".presentation.component.photo.MainActivity">
 
     <ProgressBar
         android:id="@+id/pb_home"

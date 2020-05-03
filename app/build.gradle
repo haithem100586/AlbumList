@@ -43,6 +43,11 @@ ext {
     rxAndroidVersion = '2.1.1'
 
     timberVersion = '4.7.1'
+
+    daggerVersion = "2.25.2"
+    daggerAndroidVersion = "2.22.1"
+
+    ankoVersion = "0.10.8"
 }
 
 
@@ -86,6 +91,24 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
 
     implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    //Dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerAndroidVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerAndroidVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerAndroidVersion"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    //MultiDex
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    //ANKO
+    implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
+    implementation "org.jetbrains.anko:anko-design:$ankoVersion"
+    androidExtensions {
+        experimental = true
+    }
 }
 
 kapt { generateStubs = true }

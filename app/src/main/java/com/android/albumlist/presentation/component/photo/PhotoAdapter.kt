@@ -1,4 +1,4 @@
-package com.android.albumlist.presentation.photo
+package com.android.albumlist.presentation.component.photo
 
 import android.view.LayoutInflater
 import android.view.View

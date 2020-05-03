@@ -3,9 +3,11 @@ package com.android.albumlist.framework.db
 import android.content.Context
 import com.android.albumlist.data.photo.local.LocalPhotoDataSource
 import com.android.albumlist.domain.Photo
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RoomPhotoDataSource(context: Context) :
-    LocalPhotoDataSource {
+
+class RoomPhotoDataSource(context: Context) : LocalPhotoDataSource {
 
     private val photoDao = AlbumListDataBase.getInstance(context).photoDao()
 

@@ -1,4 +1,4 @@
-package com.android.albumlist.presentation.photo
+package com.android.albumlist.presentation.component.photo
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData

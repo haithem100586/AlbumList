@@ -5,12 +5,17 @@ import com.android.albumlist.data.photo.remote.RemotePhotoDataSource
 import com.android.albumlist.domain.Photo
 import com.android.albumlist.remote.RetroClass
 import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RetrofitPhotoDataSource : RemotePhotoDataSource {
+
+@Singleton
+class RetrofitPhotoDataSource @Inject
+constructor(private val retroClass: RetroClass) : RemotePhotoDataSource {
 
     override suspend fun getAllPhotosFromWS(): Resource<List<Photo>> {
 
-        val apiService = RetroClass().getAPIInstance()
+        val apiService = retroClass.getAPIInstance()
         val photosCall = apiService.getPhotos()
         val response = photosCall.execute()
 

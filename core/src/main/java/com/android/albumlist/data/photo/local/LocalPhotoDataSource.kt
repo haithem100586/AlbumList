@@ -1,6 +1,5 @@
 package com.android.albumlist.data.photo.local
 
-import com.android.albumlist.data.Resource
 import com.android.albumlist.domain.Photo
 
 interface LocalPhotoDataSource {
