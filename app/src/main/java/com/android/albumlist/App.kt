@@ -11,13 +11,13 @@ import com.android.albumlist.framework.remote.RetrofitPhotoDataSource
 import com.android.albumlist.interactors.GetAllPhotosFromDB
 import com.android.albumlist.interactors.GetAllPhotosFromWS
 import com.android.albumlist.interactors.InsertAllPhotos
-import com.android.albumlist.presentation.AlbumListViewModelFactory
+import com.android.albumlist.presentation.ViewModelFactory
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
 
-open class AlbumListApplication : MultiDexApplication(), HasActivityInjector {
+open class App : MultiDexApplication(), HasActivityInjector {
 
     @Inject
     lateinit var retrofitPhotoDataSource: RetrofitPhotoDataSource
@@ -47,7 +47,7 @@ open class AlbumListApplication : MultiDexApplication(), HasActivityInjector {
         This injects all the dependencies into AlbumListViewModelFactory.
         It creates ViewModels in the app and passes interactor dependencies to them.
         */
-        AlbumListViewModelFactory.inject(
+        ViewModelFactory.inject(
             this,
             Interactors(
                 InsertAllPhotos(localPhotoRepository),

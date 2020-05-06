@@ -5,18 +5,20 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.test.espresso.IdlingResource
 import com.android.albumlist.R
-import com.android.albumlist.presentation.AlbumListViewModelFactory
+import com.android.albumlist.presentation.ViewModelFactory
 import com.android.albumlist.presentation.base.BaseActivity
+import com.android.albumlist.util.espresso.EspressoIdlingResource
 import com.task.data.error.Error.Companion.NETWORK_ERROR
 import com.task.data.error.Error.Companion.NO_INTERNET_CONNECTION
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
-import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
@@ -24,10 +26,15 @@ class MainActivity : BaseActivity() {
     private lateinit var photoAdapter: PhotoAdapter
 
     override val layoutId: Int get() = R.layout.activity_main
+
+    val countingIdlingResource: IdlingResource
+        @VisibleForTesting
+        get() = EspressoIdlingResource.idlingResource
+
     override fun initializeViewModel() {
         photoViewModel = ViewModelProviders.of(
             this,
-            AlbumListViewModelFactory
+            ViewModelFactory
         ).get(PhotoViewModel::class.java)
     }
 

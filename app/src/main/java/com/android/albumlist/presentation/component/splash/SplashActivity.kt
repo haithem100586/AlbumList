@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.ViewModelProviders
 import com.android.albumlist.R
-import com.android.albumlist.presentation.AlbumListViewModelFactory
+import com.android.albumlist.presentation.ViewModelFactory
 import com.android.albumlist.presentation.base.BaseActivity
 import com.android.albumlist.presentation.component.photo.MainActivity
 import com.android.albumlist.util.Constants
@@ -21,7 +21,7 @@ class SplashActivity : BaseActivity() {
     override fun initializeViewModel() {
         splashViewModel = ViewModelProviders.of(
             this,
-            AlbumListViewModelFactory
+            ViewModelFactory
         ).get(SplashViewModel::class.java)
     }
 
