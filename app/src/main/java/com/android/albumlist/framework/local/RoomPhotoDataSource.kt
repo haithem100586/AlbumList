@@ -22,7 +22,7 @@ class RoomPhotoDataSource(context: Context) : LocalPhotoDataSource {
                     photo.albumId,
                     photo.title,
                     photo.url,
-                    photo.thumbnail
+                    photo.thumbnailUrl
                 )
             )
         }

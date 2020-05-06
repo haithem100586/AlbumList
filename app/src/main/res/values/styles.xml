@@ -22,4 +22,11 @@
         <item name="searchHintIcon">@drawable/ic_search_hint</item>
     </style>
 
+    <style name="title_style" parent="Base.TextAppearance.AppCompat.Large">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 </resources>

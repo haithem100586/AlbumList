@@ -16,24 +16,27 @@
 
 package com.android.albumlist.framework.di
 
-import com.android.albumlist.App
+import android.app.Application
+import com.android.albumlist.AppTest
+import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [
-        AndroidInjectionModule::class,
+    modules = [AndroidInjectionModule::class,
         AppModule::class,
-        ActivityModuleBuilder::class
-    ]
+        ActivityModuleBuilder::class]
 )
-interface AppComponent {
+interface TestAppComponent : AppComponent {
     @Component.Builder
     interface Builder {
-        fun build(): AppComponent
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): TestAppComponent
     }
 
-    fun inject(app: App)
+    fun inject(app: AppTest)
 }

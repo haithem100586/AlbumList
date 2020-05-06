@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package com.android.albumlist.framework.di
+
+import com.android.albumlist.presentation.component.details.DetailsActivity
 import com.android.albumlist.presentation.component.photo.MainActivity
 import com.android.albumlist.presentation.component.splash.SplashActivity
 import dagger.Module
@@ -28,5 +30,8 @@ abstract class ActivityModuleBuilder {
 
     @ContributesAndroidInjector
     abstract fun contributeHomeActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeDetailsActivity(): DetailsActivity
 
 }

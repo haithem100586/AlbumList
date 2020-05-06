@@ -5,18 +5,26 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.test.espresso.IdlingResource
 import com.android.albumlist.R
-import com.android.albumlist.presentation.AlbumListViewModelFactory
+import com.android.albumlist.framework.db.PhotoEntity
+import com.android.albumlist.presentation.ViewModelFactory
 import com.android.albumlist.presentation.base.BaseActivity
+import com.android.albumlist.presentation.component.details.DetailsActivity
+import com.android.albumlist.util.Constants
+import com.android.albumlist.util.Event
+import com.android.albumlist.util.espresso.EspressoIdlingResource
+import com.android.albumlist.util.observeEvent
 import com.task.data.error.Error.Companion.NETWORK_ERROR
 import com.task.data.error.Error.Companion.NO_INTERNET_CONNECTION
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.intentFor
 import timber.log.Timber
-import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
@@ -24,10 +32,15 @@ class MainActivity : BaseActivity() {
     private lateinit var photoAdapter: PhotoAdapter
 
     override val layoutId: Int get() = R.layout.activity_main
+
+    val countingIdlingResource: IdlingResource
+        @VisibleForTesting
+        get() = EspressoIdlingResource.idlingResource
+
     override fun initializeViewModel() {
         photoViewModel = ViewModelProviders.of(
             this,
-            AlbumListViewModelFactory
+            ViewModelFactory
         ).get(PhotoViewModel::class.java)
     }
 
@@ -42,14 +55,13 @@ class MainActivity : BaseActivity() {
 
 
     fun initView() {
-        photoAdapter = PhotoAdapter() {}
+        photoAdapter = PhotoAdapter(photoViewModel) /*{}*/
         rv_photos.layoutManager = LinearLayoutManager(this@MainActivity)
         rv_photos.adapter = photoAdapter
     }
 
 
     fun getAllPhotos() {
-
         photoViewModel.getPhotosFromDB()
         photoViewModel.listphotosMutableLiveData.observe(this, Observer {
             Timber.d("@@@ getPhotosFromDB : listphotosMutableLiveData size is %s", it.size)
@@ -127,5 +139,16 @@ class MainActivity : BaseActivity() {
             noInternetMsg = getString(R.string.msg_problem_server)
         }
         Toast.makeText(this, noInternetMsg, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun navigateToDetailsScreen(navigateEvent: Event<PhotoEntity>) {
+        navigateEvent.getContentIfNotHandled()?.let {
+            startActivity(intentFor<DetailsActivity>(Constants.PHOTOS_ITEM_KEY to it))
+        }
+    }
+
+    override fun observeViewModel() {
+        // :: converts a kotlin function into a lambda
+        observeEvent(photoViewModel.openPhotoDetails, ::navigateToDetailsScreen)
     }
 }
