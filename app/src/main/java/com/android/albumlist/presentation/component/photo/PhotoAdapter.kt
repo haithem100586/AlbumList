@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.albumlist.R
 import com.android.albumlist.domain.Photo
+import com.android.albumlist.framework.db.PhotoEntity
+import com.android.albumlist.presentation.base.listeners.RecyclerItemListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.innerlayout.view.*
 import java.util.*
@@ -17,11 +19,17 @@ import java.util.*
 
 /* Adapter class of photo*/
 class PhotoAdapter(
-    private var photosMutableList: MutableList<Photo> = mutableListOf(),
-    private val itemClickListener: (Photo) -> Unit
+    private val photoListViewModel: PhotoViewModel,
+    private var photosMutableList: MutableList<Photo> = mutableListOf()
 ) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>(), Filterable {
 
     private var searchPhotosMutableList: MutableList<Photo> = mutableListOf()
+
+    private val onItemClickListener: RecyclerItemListener = object : RecyclerItemListener {
+        override fun onItemSelected(photoEntity: PhotoEntity) {
+            photoListViewModel.openPhotosDetails(photoEntity)
+        }
+    }
 
     init {
         this.searchPhotosMutableList = photosMutableList
@@ -48,7 +56,14 @@ class PhotoAdapter(
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background).into(holder.photoImageView)
             holder.titleTextView.text = searchPhotosMutableList[position].title
-            holder.itemView.setOnClickListener { itemClickListener.invoke(searchPhotosMutableList[position]) }
+            holder.itemView.setOnClickListener {
+                //itemClickListener.invoke(searchPhotosMutableList[position])
+
+                val photo = searchPhotosMutableList[position]
+                val photoEntity =
+                    PhotoEntity(photo.id, photo.albumId, photo.title, photo.url, photo.thumbnailUrl)
+                onItemClickListener.onItemSelected(photoEntity)
+            }
         }
     }
 

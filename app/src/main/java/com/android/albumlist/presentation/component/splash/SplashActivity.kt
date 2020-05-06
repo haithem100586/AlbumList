@@ -30,6 +30,9 @@ class SplashActivity : BaseActivity() {
         navigateToMainScreen()
     }
 
+    override fun observeViewModel() {
+    }
+
     private fun navigateToMainScreen() {
         Handler().postDelayed({
             startActivity<MainActivity>()

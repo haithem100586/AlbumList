@@ -12,6 +12,9 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
         initializeViewModel()
+        observeViewModel()
     }
+
+    abstract fun observeViewModel()
 
 }

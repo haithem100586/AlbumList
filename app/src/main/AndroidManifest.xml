@@ -25,6 +25,7 @@
         </activity>
 
         <activity android:name=".presentation.component.photo.MainActivity" />
+        <activity android:name=".presentation.component.details.DetailsActivity"/>
 
     </application>
 

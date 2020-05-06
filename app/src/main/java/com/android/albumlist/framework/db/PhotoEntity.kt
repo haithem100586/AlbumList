@@ -3,8 +3,11 @@ package com.android.albumlist.framework.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 
+@Parcelize
 @Entity(tableName = "photo")
 data class PhotoEntity(
     @PrimaryKey val id: Int = 0,
@@ -12,4 +15,4 @@ data class PhotoEntity(
     @ColumnInfo(name = "title") val title: String = "",
     @ColumnInfo(name = "url") val url: String = "",
     @ColumnInfo(name = "thumbnail") val thumbnail: String = ""
-)
+):Parcelable
