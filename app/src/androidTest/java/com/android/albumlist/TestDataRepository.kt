@@ -2,7 +2,7 @@ package com.android.albumlist
 
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
-import com.android.albumlist.TestDataReprository.Instance.initData
+import com.android.albumlist.TestDataRepository.Instance.initData
 import com.android.albumlist.data.Resource
 import com.android.albumlist.data.photo.remote.RemotePhotoDataSource
 import com.android.albumlist.domain.Photo
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 
 
-class TestDataReprository @Inject constructor() : RemotePhotoDataSource {
+class TestDataRepository @Inject constructor() : RemotePhotoDataSource {
 
     override suspend fun getAllPhotosFromWS(): Resource<List<Photo>> {
         return Resource.Success(initData())
