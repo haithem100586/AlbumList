@@ -39,7 +39,7 @@ class DetailsActivity : BaseActivity() {
     private fun initializeView(photoEntity: PhotoEntity) {
         tv_title?.text = photoEntity.title
         tv_thumbnailUrl?.text = photoEntity.thumbnail
-        if (!photoEntity.url.isEmpty()) {
+        if (photoEntity.url.isNotEmpty()) {
             Picasso.get().load(photoEntity.url).placeholder(R.drawable.ic_launcher_background)
                 .into(iv_photo_main_Image)
         }
