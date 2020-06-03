@@ -20,8 +20,8 @@ import com.android.albumlist.util.Constants
 import com.android.albumlist.util.Event
 import com.android.albumlist.util.espresso.EspressoIdlingResource
 import com.android.albumlist.util.observeEvent
-import com.task.data.error.Error.Companion.NETWORK_ERROR
-import com.task.data.error.Error.Companion.NO_INTERNET_CONNECTION
+import com.android.albumlist.data.error.Error.Companion.NETWORK_ERROR
+import com.android.albumlist.data.error.Error.Companion.NO_INTERNET_CONNECTION
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.intentFor
 import timber.log.Timber
@@ -63,7 +63,7 @@ class MainActivity : BaseActivity() {
 
     fun getAllPhotos() {
         photoViewModel.getPhotosFromDB()
-        photoViewModel.listphotosMutableLiveData.observe(this, Observer {
+        photoViewModel.listPhotosMutableLiveData.observe(this, Observer {
             Timber.d("@@@ getPhotosFromDB : listphotosMutableLiveData size is %s", it.size)
             if (it.size > 0) {
                 if (it.isEmpty() == false) {

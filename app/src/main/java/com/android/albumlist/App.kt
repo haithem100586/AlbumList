@@ -1,6 +1,7 @@
 package com.android.albumlist
 
 import android.app.Activity
+import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.android.albumlist.data.photo.local.LocalPhotoRepository
 import com.android.albumlist.data.photo.remote.RemotePhotoRepository
@@ -25,9 +26,10 @@ open class App : MultiDexApplication(), HasActivityInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
+
+
     override fun onCreate() {
         super.onCreate()
-
         initDagger()
         initViewModelFactory()
     }

@@ -9,7 +9,7 @@ import com.android.albumlist.presentation.base.AlbumListViewModel
 import com.android.albumlist.framework.Interactors
 import com.android.albumlist.framework.db.PhotoEntity
 import com.android.albumlist.util.Event
-import com.task.data.error.Error.Companion.NETWORK_ERROR
+import com.android.albumlist.data.error.Error.Companion.NETWORK_ERROR
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -18,7 +18,7 @@ class PhotoViewModel(application: Application, interactors: Interactors) :
     AlbumListViewModel(application, interactors) {
 
     val listResourcePhotosMutableLiveData = MutableLiveData<Resource<List<Photo>>>()
-    val listphotosMutableLiveData = MutableLiveData<List<Photo>>()
+    val listPhotosMutableLiveData = MutableLiveData<List<Photo>>()
 
     /**
      * UI actions as event, user action is single one time event, Shouldn't be multiple time consumption
@@ -29,7 +29,7 @@ class PhotoViewModel(application: Application, interactors: Interactors) :
 
     fun getPhotosFromDB() {
         GlobalScope.launch {
-            listphotosMutableLiveData.postValue(interactors.getAllPhotosFromDB.invoke())
+            listPhotosMutableLiveData.postValue(interactors.getAllPhotosFromDB.invoke())
         }
     }
 

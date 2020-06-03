@@ -23,7 +23,7 @@ class TestDataRepository @Inject constructor() : RemotePhotoDataSource {
         fun initData(): List<Photo> {
             val gson = Gson()
             val jsonString = getJson("PhotosApiResponse.json")
-            return gson.fromJson(jsonString, Photo::class.java) as List<Photo>
+            return gson.fromJson(jsonString, Array<Photo>::class.java).toList()
         }
 
         private fun getJson(path: String): String {
