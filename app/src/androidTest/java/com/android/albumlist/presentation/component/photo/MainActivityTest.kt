@@ -91,7 +91,7 @@ class MainActivityTest {
     }
 
 
-    fun typeSearchViewText(text: String): ViewAction {
+    private fun typeSearchViewText(text: String): ViewAction {
         return object : ViewAction {
             override fun getDescription(): String {
                 return "Change view text"

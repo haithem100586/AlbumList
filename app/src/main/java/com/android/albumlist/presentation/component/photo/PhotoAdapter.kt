@@ -68,7 +68,7 @@ class PhotoAdapter(
     }
 
     fun update(newPhotos: List<Photo>) {
-        if (newPhotos.size > 0) {
+        if (newPhotos.isNotEmpty()) {
             searchPhotosMutableList.clear()
             newPhotos.let { searchPhotosMutableList.addAll(it) }
             notifyDataSetChanged()

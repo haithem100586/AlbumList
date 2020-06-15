@@ -1,7 +1,6 @@
 package com.android.albumlist
 
 import android.app.Activity
-import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.android.albumlist.data.photo.local.LocalPhotoRepository
 import com.android.albumlist.data.photo.remote.RemotePhotoRepository
@@ -41,7 +40,7 @@ open class App : MultiDexApplication(), HasActivityInjector {
     override fun activityInjector() = dispatchingAndroidInjector
 
 
-    fun initViewModelFactory(){
+    private fun initViewModelFactory(){
 
         val localPhotoRepository = LocalPhotoRepository(RoomPhotoDataSource(this))
         val remotePhotoRepository = RemotePhotoRepository(retrofitPhotoDataSource)

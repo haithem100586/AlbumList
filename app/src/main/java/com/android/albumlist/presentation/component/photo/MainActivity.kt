@@ -54,19 +54,19 @@ class MainActivity : BaseActivity() {
     }
 
 
-    fun initView() {
+    private fun initView() {
         photoAdapter = PhotoAdapter(photoViewModel) /*{}*/
         rv_photos.layoutManager = LinearLayoutManager(this@MainActivity)
         rv_photos.adapter = photoAdapter
     }
 
 
-    fun getAllPhotos() {
+    private fun getAllPhotos() {
         photoViewModel.getPhotosFromDB()
         photoViewModel.listPhotosMutableLiveData.observe(this, Observer {
             Timber.d("@@@ getPhotosFromDB : listphotosMutableLiveData size is %s", it.size)
-            if (it.size > 0) {
-                if (it.isEmpty() == false) {
+            if (it.isNotEmpty()) {
+                if (it.isNotEmpty()) {
                     it.let { it1 -> photoAdapter.update(it1) }
                     pb_home.visibility = View.GONE
                     sv_input.visibility = View.VISIBLE
@@ -103,7 +103,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    fun callSearch() {
+    private fun callSearch() {
         // Associate search_layout configuration with the SearchView
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         sv_input.setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -125,7 +125,7 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    fun callPullToRefresh() {
+    private fun callPullToRefresh() {
         srl_photos.setOnRefreshListener {
             srl_photos.isRefreshing = false
             sv_input.setQuery("", true)
@@ -133,9 +133,9 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun displayToast(error: Int) {
+    private fun displayToast(error: Int) {
         var noInternetMsg = getString(R.string.msg_no_internet)
-        if (error.equals(NETWORK_ERROR)) {
+        if (error == NETWORK_ERROR) {
             noInternetMsg = getString(R.string.msg_problem_server)
         }
         Toast.makeText(this, noInternetMsg, Toast.LENGTH_SHORT).show()

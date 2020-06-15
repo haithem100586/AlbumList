@@ -6,7 +6,7 @@ import com.android.albumlist.data.Resource
 import com.android.albumlist.domain.Photo
 import com.android.albumlist.util.MainCoroutineRule
 import com.util.InstantExecutorExtension
-import com.util.TestModelsGenerator
+import com.android.albumlist.util.TestModelsGenerator
 import com.android.albumlist.data.error.Error
 import io.mockk.Runs
 import io.mockk.every

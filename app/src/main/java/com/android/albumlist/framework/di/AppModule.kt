@@ -15,8 +15,7 @@
  */
 
 package com.android.albumlist.framework.di
-import android.content.Context
-import com.android.albumlist.framework.db.RoomPhotoDataSource
+
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

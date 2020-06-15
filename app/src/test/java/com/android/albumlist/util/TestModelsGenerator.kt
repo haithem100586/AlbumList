@@ -1,4 +1,4 @@
-package com.util
+package com.android.albumlist.util
 
 import com.android.albumlist.domain.Photo
 import com.google.gson.Gson
@@ -6,10 +6,11 @@ import java.io.File
 import java.util.*
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class TestModelsGenerator {
 
     //private var photosModel: PhotosModel
-    var listPhotos: List<Photo>
+    private var listPhotos: List<Photo>
 
     init {
         val gson = Gson()
