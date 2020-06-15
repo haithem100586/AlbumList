@@ -1,4 +1,4 @@
-package com.android.albumlist.remote
+package com.android.albumlist.framework.retrofit
 
 import retrofit2.Call
 import com.android.albumlist.domain.Photo

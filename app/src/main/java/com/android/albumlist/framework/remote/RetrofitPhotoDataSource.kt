@@ -3,7 +3,7 @@ package com.android.albumlist.framework.remote
 import com.android.albumlist.data.Resource
 import com.android.albumlist.data.photo.remote.RemotePhotoDataSource
 import com.android.albumlist.domain.Photo
-import com.android.albumlist.remote.RetroClass
+import com.android.albumlist.framework.retrofit.RetroClass
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton

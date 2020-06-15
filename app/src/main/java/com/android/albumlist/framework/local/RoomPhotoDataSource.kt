@@ -1,7 +1,6 @@
 package com.android.albumlist.framework.db
 
 import android.content.Context
-import com.android.albumlist.data.Resource
 import com.android.albumlist.data.photo.local.LocalPhotoDataSource
 import com.android.albumlist.domain.Photo
 

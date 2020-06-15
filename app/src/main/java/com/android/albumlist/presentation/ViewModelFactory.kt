@@ -10,7 +10,7 @@ import com.android.albumlist.presentation.base.AlbumListViewModel
 object ViewModelFactory : ViewModelProvider.Factory {
 
     lateinit var application: Application
-    lateinit var dependencies: Interactors
+    private lateinit var dependencies: Interactors
 
     fun inject(application: Application, dependencies: Interactors) {
         ViewModelFactory.application = application
