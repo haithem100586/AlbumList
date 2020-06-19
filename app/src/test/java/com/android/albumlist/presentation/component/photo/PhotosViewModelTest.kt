@@ -21,10 +21,10 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
 @ExtendWith(InstantExecutorExtension::class)
-class PhotoViewModelTest {
+class PhotosViewModelTest {
 
     // Subject under test
-    private val photoViewModel: PhotoViewModel = mockk()
+    private val photosViewModel: PhotosViewModel = mockk()
 
     // Set the main coroutines dispatcher for unit testing.
     @ExperimentalCoroutinesApi
@@ -46,7 +46,7 @@ class PhotoViewModelTest {
         // We initialise the repository with no tasks
         photoTitle = testModelsGenerator.getStupSearchTitle()
         val photosSuccess = MutableLiveData<Resource<List<Photo>>>()
-        every { photoViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
+        every { photosViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
     }
 
     @Test
@@ -57,15 +57,15 @@ class PhotoViewModelTest {
         photosSuccess.value = Resource.Success(photosTest)
 
         //1- Mock calls
-        every { photoViewModel.getPhotosFromWS() } just Runs
-        every { photoViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
+        every { photosViewModel.getPhotosFromWS() } just Runs
+        every { photosViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
 
         //2- active observer for livedata
-        photoViewModel.listResourcePhotosMutableLiveData.observeForever { }
+        photosViewModel.listResourcePhotosMutableLiveData.observeForever { }
 
         //3-verify
-        val isEmptyList = photoViewModel.listResourcePhotosMutableLiveData.value?.data.isNullOrEmpty()
-        assert(photosTest == photoViewModel.listResourcePhotosMutableLiveData.value?.data)
+        val isEmptyList = photosViewModel.listResourcePhotosMutableLiveData.value?.data.isNullOrEmpty()
+        assert(photosTest == photosViewModel.listResourcePhotosMutableLiveData.value?.data)
         assert(!isEmptyList)
     }
 
@@ -78,15 +78,15 @@ class PhotoViewModelTest {
         photosSuccess.value = Resource.Success(photosTest)
 
         //1- Mock calls
-        every { photoViewModel.getPhotosFromWS() } just Runs
-        every { photoViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
+        every { photosViewModel.getPhotosFromWS() } just Runs
+        every { photosViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
 
         //2- active observer for livedata
-        photoViewModel.listResourcePhotosMutableLiveData.observeForever { }
+        photosViewModel.listResourcePhotosMutableLiveData.observeForever { }
 
         //3-verify
-        val isEmptyList = photoViewModel.listResourcePhotosMutableLiveData.value?.data.isNullOrEmpty()
-        assert(photosTest == photoViewModel.listResourcePhotosMutableLiveData.value?.data)
+        val isEmptyList = photosViewModel.listResourcePhotosMutableLiveData.value?.data.isNullOrEmpty()
+        assert(photosTest == photosViewModel.listResourcePhotosMutableLiveData.value?.data)
         assert(isEmptyList)
     }
 
@@ -98,14 +98,14 @@ class PhotoViewModelTest {
         listPhotosFail.value = Resource.DataError(Error.NETWORK_ERROR)
 
         //1- Mock calls
-        every { photoViewModel.getPhotosFromWS() } just Runs
-        every { photoViewModel.listResourcePhotosMutableLiveData } returns listPhotosFail
+        every { photosViewModel.getPhotosFromWS() } just Runs
+        every { photosViewModel.listResourcePhotosMutableLiveData } returns listPhotosFail
 
         //2-active observer for livedata
-        photoViewModel.listResourcePhotosMutableLiveData.observeForever { }
+        photosViewModel.listResourcePhotosMutableLiveData.observeForever { }
 
         //3-verify
-        assert(Error.NETWORK_ERROR == photoViewModel.listResourcePhotosMutableLiveData.value?.errorCode)
+        assert(Error.NETWORK_ERROR == photosViewModel.listResourcePhotosMutableLiveData.value?.errorCode)
     }
 
 

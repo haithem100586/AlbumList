@@ -28,7 +28,7 @@ import timber.log.Timber
 
 class MainActivity : BaseActivity() {
 
-    private lateinit var photoViewModel: PhotoViewModel
+    private lateinit var photosViewModel: PhotosViewModel
     private lateinit var photoAdapter: PhotoAdapter
 
     override val layoutId: Int get() = R.layout.activity_main
@@ -38,10 +38,10 @@ class MainActivity : BaseActivity() {
         get() = EspressoIdlingResource.idlingResource
 
     override fun initializeViewModel() {
-        photoViewModel = ViewModelProviders.of(
+        photosViewModel = ViewModelProviders.of(
             this,
             ViewModelFactory
-        ).get(PhotoViewModel::class.java)
+        ).get(PhotosViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,43 +55,43 @@ class MainActivity : BaseActivity() {
 
 
     private fun initView() {
-        photoAdapter = PhotoAdapter(photoViewModel) /*{}*/
+        photoAdapter = PhotoAdapter(photosViewModel) /*{}*/
         rv_photos.layoutManager = LinearLayoutManager(this@MainActivity)
         rv_photos.adapter = photoAdapter
     }
 
 
     private fun getAllPhotos() {
-        photoViewModel.getPhotosFromDB()
-        photoViewModel.listPhotosMutableLiveData.observe(this, Observer {
-            Timber.d("@@@ getPhotosFromDB : listphotosMutableLiveData size is %s", it.size)
-            if (it.isNotEmpty()) {
-                if (it.isNotEmpty()) {
-                    it.let { it1 -> photoAdapter.update(it1) }
+        photosViewModel.getPhotosFromDB()
+        photosViewModel.listPhotosViewStateMutableLiveData.observe(this, Observer {
+            Timber.d("@@@ getPhotosFromDB : listphotosMutableLiveData size is %s", it.photos?.size)
+            if (!it.loading) {
+                if (it.photos?.isNotEmpty()!!) {
+                    photoAdapter.update(it.photos)
                     pb_home.visibility = View.GONE
                     sv_input.visibility = View.VISIBLE
+                }else {
+                    callServer()
                 }
-            } else {
-                callServer()
             }
         })
     }
 
 
     private fun callServer() {
-        if (photoViewModel.isNetworkAvailable(this)) {
-            photoViewModel.getPhotosFromWS()
-            photoViewModel.listResourcePhotosMutableLiveData.observe(this, Observer {
+        if (photosViewModel.isNetworkAvailable(this)) {
+            photosViewModel.getPhotosFromWS()
+            photosViewModel.listPhotosViewStateMutableLiveData.observe(this, Observer {
                 Timber.d(
                     "@@@ getPhotosFromWS : listResourcePhotosMutableLiveData size is %d",
-                    it.data?.size
+                    it.photos?.size
                 )
-                if (it.errorCode != null) {
-                    displayToast(it.errorCode!!)
+                if (it.errorMessage != null) {
+                    displayToast(it.errorMessage)
                     pb_home.visibility = View.GONE
-                    Timber.d("@@@ getPhotosFromWS : errorCode is %d", it.errorCode)
-                } else if (it.data?.isEmpty() == false) {
-                    it.data?.let { it1 -> photoAdapter.update(it1) }
+                    Timber.d("@@@ getPhotosFromWS : errorCode is %d", it.errorMessage)
+                } else if (it.photos?.isEmpty() == false) {
+                    it.photos.let { it1 -> photoAdapter.update(it1) }
                     pb_home.visibility = View.GONE
                     sv_input.visibility = View.VISIBLE
                 }
@@ -149,6 +149,6 @@ class MainActivity : BaseActivity() {
 
     override fun observeViewModel() {
         // :: converts a kotlin function into a lambda
-        observeEvent(photoViewModel.openPhotoDetails, ::navigateToDetailsScreen)
+        observeEvent(photosViewModel._openPhotoDetails, ::navigateToDetailsScreen)
     }
 }
