@@ -19,7 +19,7 @@ import java.util.*
 
 /* Adapter class of photo*/
 class PhotoAdapter(
-    private val photoListViewModel: PhotoViewModel,
+    private val photosListViewModel: PhotosViewModel,
     private var photosMutableList: MutableList<Photo> = mutableListOf()
 ) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>(), Filterable {
 
@@ -27,7 +27,7 @@ class PhotoAdapter(
 
     private val onItemClickListener: RecyclerItemListener = object : RecyclerItemListener {
         override fun onItemSelected(photoEntity: PhotoEntity) {
-            photoListViewModel.openPhotosDetails(photoEntity)
+            photosListViewModel.openPhotoDetails(photoEntity)
         }
     }
 
