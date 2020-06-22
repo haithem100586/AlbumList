@@ -6,7 +6,6 @@ import com.android.albumlist.util.MainCoroutineRule
 import com.util.InstantExecutorExtension
 import com.android.albumlist.util.TestModelsGenerator
 import com.android.albumlist.data.error.Error
-import com.android.albumlist.framework.Interactors
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
