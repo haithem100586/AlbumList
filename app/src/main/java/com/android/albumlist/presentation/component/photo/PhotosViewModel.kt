@@ -29,7 +29,7 @@ class PhotosViewModel(application: Application, interactors: Interactors) :
     fun getPhotosFromDB() {
         listPhotosViewStateMutableLiveData.postValue(PhotosViewState(null,true,null))
         GlobalScope.launch {
-            listPhotosViewStateMutableLiveData.postValue(PhotosViewState(interactors.getAllPhotosFromDB.invoke(),false,null))
+            listPhotosViewStateMutableLiveData.postValue(PhotosViewState(interactors.getAllPhotosFromDB.invoke(),false,0))
         }
     }
 
@@ -41,7 +41,7 @@ class PhotosViewModel(application: Application, interactors: Interactors) :
         GlobalScope.launch {
             try {
                 serviceResponse = interactors.getAllPhotosFromWS()
-                listPhotosViewStateMutableLiveData.postValue(PhotosViewState(serviceResponse.data,false,null))
+                listPhotosViewStateMutableLiveData.postValue(PhotosViewState(serviceResponse.data,false,0))
                 serviceResponse.data?.let { interactors.insertAllPhotos(it) }
             } catch (e: Exception) {
                 listPhotosViewStateMutableLiveData.postValue(PhotosViewState(null,false,NETWORK_ERROR))

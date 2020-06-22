@@ -66,8 +66,8 @@ class MainActivity : BaseActivity() {
         photosViewModel.listPhotosViewStateMutableLiveData.observe(this, Observer {
             Timber.d("@@@ getPhotosFromDB : listphotosMutableLiveData size is %s", it.photos?.size)
             if (!it.loading) {
-                if (it.photos?.isNotEmpty()!!) {
-                    photoAdapter.update(it.photos)
+                if (it.photos?.size!=0) {
+                    it.photos?.let { it1 -> photoAdapter.update(it1) }
                     pb_home.visibility = View.GONE
                     sv_input.visibility = View.VISIBLE
                 }else {
@@ -86,12 +86,12 @@ class MainActivity : BaseActivity() {
                     "@@@ getPhotosFromWS : listResourcePhotosMutableLiveData size is %d",
                     it.photos?.size
                 )
-                if (it.errorMessage != null) {
-                    displayToast(it.errorMessage)
+                if (it.errorCode != 0) {
+                    it.errorCode?.let { it1 -> displayToast(it1) }
                     pb_home.visibility = View.GONE
-                    Timber.d("@@@ getPhotosFromWS : errorCode is %d", it.errorMessage)
+                    Timber.d("@@@ getPhotosFromWS : errorCode is %d", it.errorCode)
                 } else if (it.photos?.isEmpty() == false) {
-                    it.photos.let { it1 -> photoAdapter.update(it1) }
+                    it.photos.let { it1 -> it1?.let { it2 -> photoAdapter.update(it2) } }
                     pb_home.visibility = View.GONE
                     sv_input.visibility = View.VISIBLE
                 }

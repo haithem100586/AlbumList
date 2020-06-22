@@ -2,12 +2,11 @@ package com.android.albumlist.presentation.component.photo
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.android.albumlist.data.Resource
-import com.android.albumlist.domain.Photo
 import com.android.albumlist.util.MainCoroutineRule
 import com.util.InstantExecutorExtension
 import com.android.albumlist.util.TestModelsGenerator
 import com.android.albumlist.data.error.Error
+import com.android.albumlist.framework.Interactors
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -41,31 +40,31 @@ class PhotosViewModelTest {
 
     @Before
     fun setUp() {
-
         // Create class under test
         // We initialise the repository with no tasks
         photoTitle = testModelsGenerator.getStupSearchTitle()
-        val photosSuccess = MutableLiveData<Resource<List<Photo>>>()
-        every { photosViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
+        val photosSuccess = MutableLiveData<PhotosViewState>()
+        every { photosViewModel.listPhotosViewStateMutableLiveData } returns photosSuccess
     }
 
     @Test
-    fun handlePhotosList() {
+    fun shouldLoadSuccessfullyPhotosFromWS(){
         // Let's do an answer for the liveData
         val photosTest = testModelsGenerator.generateListPhotos()
-        val photosSuccess = MutableLiveData<Resource<List<Photo>>>()
-        photosSuccess.value = Resource.Success(photosTest)
+        val photosSuccess = MutableLiveData<PhotosViewState>()
+        photosSuccess.postValue( PhotosViewState(photosTest,false,null) )
 
         //1- Mock calls
         every { photosViewModel.getPhotosFromWS() } just Runs
-        every { photosViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
+        every { photosViewModel.listPhotosViewStateMutableLiveData } returns photosSuccess
 
         //2- active observer for livedata
-        photosViewModel.listResourcePhotosMutableLiveData.observeForever { }
+        photosViewModel.listPhotosViewStateMutableLiveData.observeForever { }
 
         //3-verify
-        val isEmptyList = photosViewModel.listResourcePhotosMutableLiveData.value?.data.isNullOrEmpty()
-        assert(photosTest == photosViewModel.listResourcePhotosMutableLiveData.value?.data)
+        val isEmptyList = photosViewModel.listPhotosViewStateMutableLiveData.value?.photos.isNullOrEmpty()
+        assert(photosViewModel.listPhotosViewStateMutableLiveData.value?.loading == false)
+        assert(photosTest == photosViewModel.listPhotosViewStateMutableLiveData.value?.photos)
         assert(!isEmptyList)
     }
 
@@ -74,19 +73,19 @@ class PhotosViewModelTest {
     fun handleEmptyList() {
         // Let's do an answer for the liveData
         val photosTest = testModelsGenerator.generatePhotosWithEmptyList()
-        val photosSuccess = MutableLiveData<Resource<List<Photo>>>()
-        photosSuccess.value = Resource.Success(photosTest)
+        val photosSuccess = MutableLiveData<PhotosViewState>()
+        photosSuccess.postValue( PhotosViewState(photosTest,false,null) )
 
         //1- Mock calls
         every { photosViewModel.getPhotosFromWS() } just Runs
-        every { photosViewModel.listResourcePhotosMutableLiveData } returns photosSuccess
+        every { photosViewModel.listPhotosViewStateMutableLiveData } returns photosSuccess
 
         //2- active observer for livedata
-        photosViewModel.listResourcePhotosMutableLiveData.observeForever { }
+        photosViewModel.listPhotosViewStateMutableLiveData.observeForever { }
 
         //3-verify
-        val isEmptyList = photosViewModel.listResourcePhotosMutableLiveData.value?.data.isNullOrEmpty()
-        assert(photosTest == photosViewModel.listResourcePhotosMutableLiveData.value?.data)
+        val isEmptyList = photosViewModel.listPhotosViewStateMutableLiveData.value?.photos.isNullOrEmpty()
+        assert(photosTest == photosViewModel.listPhotosViewStateMutableLiveData.value?.photos)
         assert(isEmptyList)
     }
 
@@ -94,18 +93,18 @@ class PhotosViewModelTest {
     @Test
     fun handlePhotosError() {
         // Let's do an answer for the liveData
-        val listPhotosFail = MutableLiveData<Resource<List<Photo>>>()
-        listPhotosFail.value = Resource.DataError(Error.NETWORK_ERROR)
+        val listPhotosFail = MutableLiveData<PhotosViewState>()
+        listPhotosFail.postValue( PhotosViewState(null,false,Error.NETWORK_ERROR) )
 
         //1- Mock calls
         every { photosViewModel.getPhotosFromWS() } just Runs
-        every { photosViewModel.listResourcePhotosMutableLiveData } returns listPhotosFail
+        every { photosViewModel.listPhotosViewStateMutableLiveData } returns listPhotosFail
 
         //2-active observer for livedata
-        photosViewModel.listResourcePhotosMutableLiveData.observeForever { }
+        photosViewModel.listPhotosViewStateMutableLiveData.observeForever { }
 
         //3-verify
-        assert(Error.NETWORK_ERROR == photosViewModel.listResourcePhotosMutableLiveData.value?.errorCode)
+        assert(Error.NETWORK_ERROR == photosViewModel.listPhotosViewStateMutableLiveData.value?.errorCode)
     }
 
 
